@@ -47,15 +47,9 @@ export const sections: SectionData[] = [
     title: "CWT Customs",
     blurb: "Digital solutions built with and for Sri Lanka Customs.",
     badge: SL_CUSTOMS_LOGO,
-    cover: img("customs-01-arms.webp", "ARMS", "Automated Risk Management System", 1312, 1199),
+    cover: img("customs-02-cdns 1.webp", "CDNS NextGen", "Customs Declaration & Notification System", 1312, 1199),
     extras: [
-      img("customs-02-cdns 1.webp", "CDNS NextGen", "Customs Declaration & Notification System"),
       img("customs-03-dat 1.webp", "DAT", "Data Analytics Tool"),
-      img("customs-04-edge.webp", "Customs Edge", "Real-time intelligence at the border"),
-      img("customs-05-risk.webp", "Risk Management", "Integrated risk-scoring framework", 1312, 1199),
-      img("customs-06-agentic-ai.webp", "Agentic AI", "AI-powered autonomous customs workflows"),
-      img("customs-07-oga.webp", "OGA / AD Licence Upgrade", "Other Government Agency & Advance Declaration"),
-      img("customs-08-roster.webp", "Operational Roster Engine", "Automated staff scheduling & roster management"),
     ],
   },
   {
