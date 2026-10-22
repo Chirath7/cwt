@@ -139,7 +139,7 @@ export default function ContactModal({ open, onClose }: Props) {
               type="button"
               onClick={onClose}
               aria-label="Close contact modal"
-              className="absolute right-4 top-4 z-20 flex size-8 items-center justify-center rounded-full
+              className="absolute right-4 top-4 z-20 flex size-11 items-center justify-center rounded-full
                 text-white/70 hover:bg-white/15 hover:text-white
                 md:text-slate-400 md:hover:bg-slate-100 md:hover:text-slate-600
                 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
@@ -152,7 +152,7 @@ export default function ContactModal({ open, onClose }: Props) {
               <div>
                 {/* Decorative quotation mark */}
                 <div
-                  className="font-serif text-[7rem] leading-none text-white/10 select-none -mt-4 -ml-2 mb-2"
+                  className="font-serif text-[5rem] leading-none text-white/10 select-none -mt-4 -ml-2 mb-2 sm:text-[7rem]"
                   aria-hidden="true"
                 >
                   "

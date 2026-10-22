@@ -83,7 +83,7 @@ export default function Navbar() {
           aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
           aria-expanded={menuOpen}
           aria-controls="mobile-nav"
-          className="flex size-10 items-center justify-center rounded-lg text-navy hover:bg-navy/10 md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className="flex size-11 items-center justify-center rounded-lg text-navy hover:bg-navy/10 md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           onClick={() => setMenuOpen((o) => !o)}
         >
           {/* Simple animated hamburger → ✕ */}
