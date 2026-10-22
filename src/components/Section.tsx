@@ -4,6 +4,7 @@ import type { SectionData, Infographic } from "../data/sections";
 import WindowCard from "./WindowCard";
 import CollectionSummary from "./CollectionSummary";
 import CustomsSectionContent from "./CustomsSectionContent";
+import CustomsProductsStack from "./CustomsProductsStack";
 
 interface Props {
   section: SectionData;
@@ -62,7 +63,9 @@ export default function Section({ section, index, onOpen }: Props) {
         {section.id === "customs" && <CustomsSectionContent />}
 
         {/* Content area */}
-        {isCollection ? (
+        {section.id === "customs" ? (
+          <CustomsProductsStack />
+        ) : isCollection ? (
           <AnimatePresence mode="wait">
             {!expanded ? (
               <motion.div
