@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { customsIntro, productSummaryRows, sharedApproach } from "../data/customsProducts";
 
 const TAG_STYLES: Record<string, string> = {
@@ -6,7 +7,15 @@ const TAG_STYLES: Record<string, string> = {
   NOTIFY:  "bg-emerald-100 text-emerald-700",
 };
 
+const PRODUCT_ROUTES: Record<string, string> = {
+  ARMS: "/customs/arms",
+  DAT:  "/customs/dat",
+  CDNS: "/customs/cdns",
+};
+
 export default function CustomsSectionContent() {
+  const navigate = useNavigate();
+
   return (
     <div className="mb-14 space-y-12">
       {/* Intro paragraph */}
@@ -19,32 +28,51 @@ export default function CustomsSectionContent() {
         "{customsIntro.coreMessage}"
       </blockquote>
 
-      {/* 3-product summary table */}
-      <div className="mx-auto max-w-4xl overflow-x-auto">
-        <table className="w-full text-left text-sm">
-          <thead>
-            <tr className="border-b border-slate-200 text-xs font-semibold uppercase tracking-wider text-slate-500">
-              <th className="pb-3 pr-6">Product</th>
-              <th className="pb-3 pr-6">Tag</th>
-              <th className="pb-3 pr-6">Role</th>
-              <th className="pb-3">Strategic value</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {productSummaryRows.map((row) => (
-              <tr key={row.name}>
-                <td className="py-3 pr-6 font-bold text-navy">{row.name}</td>
-                <td className="py-3 pr-6">
-                  <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-bold ${TAG_STYLES[row.tag]}`}>
-                    {row.tag}
-                  </span>
-                </td>
-                <td className="py-3 pr-6 text-slate-700">{row.role}</td>
-                <td className="py-3 text-slate-700">{row.strategicValue}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      {/* 3-product cards */}
+      <div className="mx-auto grid max-w-4xl grid-cols-1 gap-4 sm:grid-cols-3">
+        {productSummaryRows.map((row) => {
+          const route = PRODUCT_ROUTES[row.name];
+          return (
+            <div
+              key={row.name}
+              role="link"
+              tabIndex={0}
+              onClick={() => navigate(route)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  navigate(route);
+                }
+              }}
+              aria-label={`View ${row.name} product page`}
+              className="group flex cursor-pointer flex-col rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition-colors hover:bg-slate-50 focus-visible:bg-slate-100 focus-visible:outline-none"
+            >
+              {/* Name + chevron row */}
+              <div className="mb-2 flex items-start justify-between gap-2">
+                <h3 className="text-base font-bold text-navy">{row.name}</h3>
+                <span
+                  className="mt-0.5 shrink-0 text-slate-400 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+                  aria-hidden="true"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4">
+                    <path fillRule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                  </svg>
+                </span>
+              </div>
+
+              {/* Tag pill */}
+              <span className={`mb-3 inline-block self-start rounded-full px-2.5 py-0.5 text-xs font-bold ${TAG_STYLES[row.tag]}`}>
+                {row.tag}
+              </span>
+
+              {/* Role — main body, grows to fill card height */}
+              <p className="flex-1 text-sm text-slate-700">{row.role}</p>
+
+              {/* Strategic value — bottom caption */}
+              <p className="mt-4 text-xs font-medium text-slate-400">{row.strategicValue}</p>
+            </div>
+          );
+        })}
       </div>
 
       {/* Shared approach strip */}
