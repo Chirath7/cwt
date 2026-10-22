@@ -126,8 +126,10 @@ export default function ProductDetailGrid({ productId, onOpenInfographic, onOpen
 
   return (
     <>
-      <div className="grid gap-10 lg:grid-cols-3 lg:items-start">
-        {/* Left column */}
+      {/* 3-column grid: left text | infographic (2× wide) | right text
+          Mobile stacking order: infographic → left text → right text */}
+      <div className="grid grid-cols-1 gap-10 lg:[grid-template-columns:1fr_2fr_1fr] lg:items-start">
+        {/* Left column — stacks second on mobile */}
         <div className="order-2 space-y-10 lg:order-1">
           <div>
             <SubHeading>Overview</SubHeading>
@@ -169,14 +171,14 @@ export default function ProductDetailGrid({ productId, onOpenInfographic, onOpen
           )}
         </div>
 
-        {/* Center column — sticky infographic */}
+        {/* Center column — infographic, stacks first on mobile */}
         <div className="order-1 lg:order-2">
           <div className="lg:sticky lg:top-8">
-            <WindowCard item={infographicItem} onOpen={onOpenInfographic} />
+            <WindowCard item={infographicItem} onOpen={onOpenInfographic} priority />
           </div>
         </div>
 
-        {/* Right column */}
+        {/* Right column — stacks third on mobile */}
         <div className="order-3 space-y-10">
           {productId === "dat" && product.architecture && product.architecture.length > 0 && (
             <div>
