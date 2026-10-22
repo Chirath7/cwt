@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 import { sections } from "../data/sections";
 import Wordmark from "./Wordmark";
+import ContactModal from "./ContactModal";
 
 export default function Navbar() {
   const [active, setActive] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
@@ -45,6 +47,7 @@ export default function Navbar() {
   const closeMenu = () => setMenuOpen(false);
 
   return (
+    <>
     <header className="fixed inset-x-0 top-0 z-40 border-b border-black/5 bg-white/70 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
         <a href="#top" aria-label="Creative Web Technologies home">
@@ -52,7 +55,7 @@ export default function Navbar() {
         </a>
 
         {/* Desktop nav */}
-        <nav aria-label="Main navigation" className="hidden gap-1 md:flex">
+        <nav aria-label="Main navigation" className="hidden gap-1 md:flex md:items-center">
           {sections.map((s) => (
             <a
               key={s.id}
@@ -64,6 +67,13 @@ export default function Navbar() {
               {s.title}
             </a>
           ))}
+          <button
+            type="button"
+            onClick={() => setContactOpen(true)}
+            className="ml-2 rounded-full border border-brand/30 px-3 py-1.5 text-sm font-medium text-brand transition-colors hover:bg-brand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            Contact Us
+          </button>
         </nav>
 
         {/* Hamburger (mobile only) */}
@@ -124,10 +134,19 @@ export default function Navbar() {
                   {s.title}
                 </a>
               ))}
+              <button
+                type="button"
+                onClick={() => { closeMenu(); setContactOpen(true); }}
+                className="py-4 text-left text-lg font-semibold text-brand hover:text-brand/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              >
+                Contact Us
+              </button>
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
     </header>
+    <ContactModal open={contactOpen} onClose={() => setContactOpen(false)} />
+    </>
   );
 }

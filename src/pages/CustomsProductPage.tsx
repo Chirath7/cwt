@@ -10,6 +10,7 @@ import Lightbox from "../components/Lightbox";
 import DashboardGroupedGrid from "../components/DashboardGroupedGrid";
 import DashboardViewer from "../components/DashboardViewer";
 import DatExplorer from "../components/DatExplorer";
+import RoadmapTeaserBanner from "../components/RoadmapTeaserBanner";
 
 interface Props {
   productId: ProductId;
@@ -122,11 +123,14 @@ export default function CustomsProductPage({ productId }: Props) {
               <span aria-hidden="true">←</span> Back to CWT Customs
             </Link>
 
-            {/* Tag pill */}
-            <div className="mb-4">
+            {/* Tag pill + optional teaser badge */}
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
               <span className={`inline-block rounded-full px-3 py-1 text-xs font-bold ring-1 ${tagStyle.pill}`}>
                 {product.tag}
               </span>
+              {product.roadmapTeaser && (
+                <RoadmapTeaserBanner text={product.roadmapTeaser} />
+              )}
             </div>
 
             <h1 className="mb-3 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">

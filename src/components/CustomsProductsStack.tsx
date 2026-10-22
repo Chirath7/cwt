@@ -5,6 +5,7 @@ import type { Infographic } from "../data/sections";
 import Lightbox from "./Lightbox";
 import DatExplorer from "./DatExplorer";
 import WindowCard from "./WindowCard";
+import RoadmapTeaserBanner from "./RoadmapTeaserBanner";
 
 const STACK_ORDER: ProductId[] = ["arms", "cdns", "dat"];
 
@@ -173,15 +174,20 @@ export default function CustomsProductsStack() {
           >
             <div className="mx-auto max-w-7xl">
               {/* Section label */}
-              <div className="mb-10 flex flex-wrap items-center gap-3">
-                <span
-                  className={`rounded-full px-3 py-1 text-xs font-bold ${TAG_STYLES[product.tag]}`}
-                >
-                  {product.tag}
-                </span>
-                <h2 className="text-2xl font-extrabold tracking-tight text-navy sm:text-3xl">
-                  {product.fullName}
-                </h2>
+              <div className="mb-10 flex flex-wrap items-center justify-between gap-3">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span
+                    className={`rounded-full px-3 py-1 text-xs font-bold ${TAG_STYLES[product.tag]}`}
+                  >
+                    {product.tag}
+                  </span>
+                  <h2 className="text-2xl font-extrabold tracking-tight text-navy sm:text-3xl">
+                    {product.fullName}
+                  </h2>
+                </div>
+                {product.roadmapTeaser && (
+                  <RoadmapTeaserBanner text={product.roadmapTeaser} />
+                )}
               </div>
 
               {/* 3-column grid: left text / center infographic / right text

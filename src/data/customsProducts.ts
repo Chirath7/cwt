@@ -27,6 +27,7 @@ export interface CustomsProduct {
   futureEnhancements: string[];
   slReference: string;
   slReferenceUnconfirmed?: boolean;
+  roadmapTeaser?: string;
   audiences: string[];
   conversationStarter: string;
   infographic: {
@@ -101,6 +102,7 @@ export const customsProducts: Record<ProductId, CustomsProduct> = {
     slReference:
       "CWT has contributed to the ARMS initiative at Sri Lanka Customs, part of the wider digital-strengthening effort.",
     slReferenceUnconfirmed: true,
+    roadmapTeaser: "Expect more exciting updates soon.",
     audiences: [
       "Risk Management Directorates",
       "Intelligence & Enforcement Units",

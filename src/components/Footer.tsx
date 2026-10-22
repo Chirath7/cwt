@@ -9,21 +9,6 @@ export default function Footer() {
           <Wordmark light />
           <p className="text-sm text-white/70">A smarter tomorrow together.</p>
         </div>
-        <div className="flex flex-col items-center gap-2 text-center sm:items-start sm:text-left">
-          <p className="text-sm font-medium text-white/90">Get in touch</p>
-          <a
-            href="tel:+94777256682"
-            className="text-sm text-white/70 transition-colors hover:text-white"
-          >
-            +94 (77) 725 6682
-          </a>
-          <a
-            href="mailto:Kolitha@CreativeSoftware.com"
-            className="text-sm text-white/70 transition-colors hover:text-white"
-          >
-            Kolitha@CreativeSoftware.com
-          </a>
-        </div>
         <div className="flex items-center gap-4">
           <img
             src={SL_CUSTOMS_LOGO}
