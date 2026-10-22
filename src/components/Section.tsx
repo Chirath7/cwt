@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import type { SectionData, Infographic } from "../data/sections";
 import WindowCard from "./WindowCard";
 import CollectionSummary from "./CollectionSummary";
+import CustomsSectionContent from "./CustomsSectionContent";
 
 interface Props {
   section: SectionData;
@@ -18,14 +19,11 @@ export default function Section({ section, index, onOpen }: Props) {
   const allItems = [section.cover, ...(section.extras ?? [])];
 
   const handleCollapse = () => {
-    // Capture where the section header is before we shrink the DOM
     const topBefore = sectionRef.current?.getBoundingClientRect().top ?? 0;
     setExpanded(false);
-    // Two rAFs: first fires after state update, second after paint
     requestAnimationFrame(() =>
       requestAnimationFrame(() => {
         const topAfter = sectionRef.current?.getBoundingClientRect().top ?? 0;
-        // Scroll so the section header stays at the same viewport position
         window.scrollBy({ top: topAfter - topBefore, behavior: "instant" });
       }),
     );
@@ -59,6 +57,9 @@ export default function Section({ section, index, onOpen }: Props) {
           </h2>
           <p className="max-w-xl text-lg text-slate-600">{section.blurb}</p>
         </motion.div>
+
+        {/* Customs section: extra intro content above the card grid */}
+        {section.id === "customs" && <CustomsSectionContent />}
 
         {/* Content area */}
         {isCollection ? (

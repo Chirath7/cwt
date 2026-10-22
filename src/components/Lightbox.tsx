@@ -110,6 +110,17 @@ export default function Lightbox({ items, index, onChange }: Props) {
               )}
             </div>
             <div className="flex gap-2">
+              {item.videoUrl && (
+                <a
+                  href={item.videoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="rounded-full bg-white/10 px-4 py-1.5 text-sm hover:bg-white/20 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  Watch Video ↗
+                </a>
+              )}
               <button
                 onClick={() => setZoom((z) => !z)}
                 aria-label={zoom ? "Fit image to screen" : "Zoom in to image"}

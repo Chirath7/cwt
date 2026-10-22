@@ -6,6 +6,10 @@ export interface Infographic {
   caption?: string;
   w: number;
   h: number;
+  videoUrl?: string;
+  action?: "dat-explorer";
+  /** When set, clicking this card navigates to the route instead of opening a lightbox. */
+  route?: string;
 }
 
 export interface SectionData {
@@ -24,21 +28,31 @@ const img = (
   caption?: string,
   w = 1536,
   h = 1024,
-): Infographic => ({ src: `/infographics/${src}`, title, caption, w, h });
+  opts?: { videoUrl?: string; action?: "dat-explorer"; route?: string },
+): Infographic => ({
+  src: `/infographics/${src}`,
+  title,
+  caption,
+  w,
+  h,
+  videoUrl: opts?.videoUrl,
+  action: opts?.action,
+  route: opts?.route,
+});
 
 export const sections: SectionData[] = [
   {
     id: "cwt-2-0",
     order: 1,
     title: "CWT 2.0",
-    blurb: "Data, Cloud, AI and Optimization for a better tomorrow.",
+    blurb: "We leverage the power of Data, Cloud, AI, and Optimization to build intelligent, scalable, and efficient solutions that solve real-world challenges, drive innovation, and create a smarter, more sustainable future.",
     cover: img("cwt-2-0.webp", "CWT 2.0", "The complete platform: Data · Cloud · AI · Optimization"),
   },
   {
     id: "crew",
     order: 2,
     title: "CWT Crew",
-    blurb: "The people, verticals and value chain behind every delivery.",
+    blurb: "We bring together people, industry expertise, and interconnected value chains to streamline operations, strengthen collaboration, and deliver meaningful outcomes at every stage of the journey.",
     cover: img("crew.webp", "CWT Corporate Structure", "Our people, verticals and value chain", 1400, 1286),
   },
   {
@@ -47,9 +61,10 @@ export const sections: SectionData[] = [
     title: "CWT Customs",
     blurb: "Digital solutions built with and for Sri Lanka Customs.",
     badge: SL_CUSTOMS_LOGO,
-    cover: img("customs-02-cdns 1.webp", "CDNS NextGen", "Customs Declaration & Notification System", 1312, 1199),
+    cover: img("customs-01-arms.webp", "ARMS", "Automated Risk Management System", 1312, 1199, { route: "/customs/arms" }),
     extras: [
-      img("customs-03-dat 1.webp", "DAT", "Data Analytics Tool"),
+      img("customs-02-cdns 1.webp", "CDNS", "Customs Document Notification System", 1536, 1024, { route: "/customs/cdns" }),
+      img("customs-03-dat 1.webp", "DAT", "Data Analytics Tool", 1536, 1024, { action: "dat-explorer", route: "/customs/dat" }),
     ],
   },
   {

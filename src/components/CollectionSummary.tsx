@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import type { SectionData } from "../data/sections";
+import { datDashboards } from "../data/dashboards";
 
 interface Props {
   section: SectionData;
@@ -7,9 +8,15 @@ interface Props {
 }
 
 export default function CollectionSummary({ section, onExpand }: Props) {
-  const total = 1 + (section.extras?.length ?? 0);
+  const solutionCount = 1 + (section.extras?.length ?? 0);
+  const hasDat = section.extras?.some((e) => e.action === "dat-explorer") ?? false;
+  const dashboardCount = hasDat ? datDashboards.length : 0;
   const { cover } = section;
   const noun = section.id === "training" ? "courses" : "solutions";
+  const badgeLabel =
+    dashboardCount > 0
+      ? `${solutionCount} ${noun} · ${dashboardCount} dashboards`
+      : `${solutionCount} ${noun}`;
 
   return (
     <div className="mx-auto max-w-3xl">
@@ -58,7 +65,7 @@ export default function CollectionSummary({ section, onExpand }: Props) {
           className="absolute right-3 top-3 z-10 rounded-full bg-brand px-3 py-1 text-xs font-bold text-white shadow-md"
           aria-hidden="true"
         >
-          {total} {noun}
+          {badgeLabel}
         </span>
       </div>
 
@@ -73,7 +80,7 @@ export default function CollectionSummary({ section, onExpand }: Props) {
           whileHover={{ scale: 1.04 }}
           whileTap={{ scale: 0.97 }}
         >
-          View all {total}
+          View all {solutionCount}
           <span aria-hidden="true">→</span>
         </motion.button>
       </div>
