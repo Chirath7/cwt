@@ -382,9 +382,7 @@ export default function CustomsProductPage({ productId }: Props) {
                 <h2 className="text-2xl font-extrabold tracking-tight text-navy sm:text-3xl">
                   Potential future enhancements
                 </h2>
-                <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700 ring-1 ring-amber-200">
-                  Not yet delivered
-                </span>
+         
               </div>
               <ul className="space-y-3">
                 {product.futureEnhancements.map((f, i) => (
