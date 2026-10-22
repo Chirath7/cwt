@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
-import { datDashboards } from "../data/dashboards";
+import { datDashboards } from "../../data/dashboards";
 import DashboardGroupedGrid from "./DashboardGroupedGrid";
 import DashboardViewer from "./DashboardViewer";
 
@@ -64,7 +64,11 @@ export default function DatExplorer({ onClose, onOpenInfographic }: Props) {
 
   // Push #dat on mount; handle browser back/forward via popstate
   useEffect(() => {
-    history.pushState(null, "", "#dat");
+    // Skip push if already at #dat to avoid a duplicate history entry when
+    // DatExplorer is opened from inside the product overlay (which already set #dat).
+    if (location.hash !== "#dat") {
+      history.pushState(null, "", "#dat");
+    }
 
     const onPop = () => {
       const hash = location.hash;

@@ -1,19 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { AnimatePresence, motion } from "motion/react";
+import { Link, useLocation } from "react-router-dom";
+import { AnimatePresence } from "motion/react";
 import { customsProducts, PRODUCT_ORDER, type ProductId } from "../data/customsProducts";
 import { datDashboards, type Dashboard } from "../data/dashboards";
 import type { Infographic } from "../data/sections";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Lightbox from "../components/Lightbox";
-import DashboardGroupedGrid from "../components/DashboardGroupedGrid";
-import DashboardViewer from "../components/DashboardViewer";
-import DatExplorer from "../components/DatExplorer";
-import RoadmapTeaserBanner from "../components/RoadmapTeaserBanner";
+import Lightbox from "../components/ui/Lightbox";
+import DashboardGroupedGrid from "../components/customs/DashboardGroupedGrid";
+import DashboardViewer from "../components/customs/DashboardViewer";
+import DatExplorer from "../components/customs/DatExplorer";
+import RoadmapTeaserBanner from "../components/ui/RoadmapTeaserBanner";
+import ProductDetailGrid from "../components/customs/ProductDetailGrid";
 
 interface Props {
   productId: ProductId;
+  isOverlay?: boolean;
 }
 
 const TAG_STYLES: Record<string, { pill: string; text: string }> = {
@@ -28,46 +30,18 @@ const PRODUCT_NAMES: Record<ProductId, string> = {
   cdns: "CDNS",
 };
 
-function SectionHeading({ children }: { children: React.ReactNode }) {
-  return (
-    <h2 className="mb-8 text-2xl font-extrabold tracking-tight text-navy sm:text-3xl">
-      {children}
-    </h2>
-  );
-}
-
-function NumberedCard({ n, text }: { n: number; text: string }) {
-  return (
-    <div className="flex gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-      <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
-        {n}
-      </span>
-      <p className="text-sm leading-relaxed text-slate-700">{text}</p>
-    </div>
-  );
-}
-
-function ValuePoint({ text }: { text: string }) {
-  return (
-    <li className="flex gap-3 text-slate-700">
-      <span className="mt-0.5 text-brand" aria-hidden="true">✓</span>
-      <span>{text}</span>
-    </li>
-  );
-}
-
-export default function CustomsProductPage({ productId }: Props) {
+export default function CustomsProductPage({ productId, isOverlay = false }: Props) {
   const product = customsProducts[productId];
   const { hash } = useLocation();
-  const navigate = useNavigate();
 
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [selectedDashboard, setSelectedDashboard] = useState<Dashboard | null>(null);
   const [datExplorerOpen, setDatExplorerOpen] = useState(false);
 
-  // Auto-open DatExplorer when the page is loaded with a #dat hash (deep link)
+  // Auto-open DatExplorer when the standalone page is loaded with a #dat hash (deep link).
+  // Skipped in overlay mode — the overlay manages the hash and opens on user interaction.
   useEffect(() => {
-    if (productId === "dat" && (hash === "#dat" || hash.startsWith("#dat/"))) {
+    if (productId === "dat" && !isOverlay && (hash === "#dat" || hash.startsWith("#dat/"))) {
       setDatExplorerOpen(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -109,19 +83,21 @@ export default function CustomsProductPage({ productId }: Props) {
 
   return (
     <>
-      <Navbar />
+      {!isOverlay && <Navbar />}
 
       <main>
         {/* ── Hero ─────────────────────────────────────────────────── */}
         <div className="bg-gradient-to-br from-navy via-slate-800 to-slate-900 px-4 py-20 sm:px-6">
           <div className="mx-auto max-w-4xl">
-            {/* Back link */}
-            <Link
-              to="/#customs"
-              className="mb-8 inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white"
-            >
-              <span aria-hidden="true">←</span> Back to CWT Customs
-            </Link>
+            {/* Back link — only shown on the standalone page, not in the overlay */}
+            {!isOverlay && (
+              <Link
+                to="/#customs"
+                className="mb-8 inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white"
+              >
+                <span aria-hidden="true">←</span> Back to CWT Customs
+              </Link>
+            )}
 
             {/* Tag pill + optional teaser badge */}
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
@@ -171,133 +147,16 @@ export default function CustomsProductPage({ productId }: Props) {
           </div>
         </div>
 
-        {/* ── Infographic ──────────────────────────────────────────── */}
+        {/* ── Three-column product content ─────────────────────────── */}
         <div className="bg-white px-4 py-16 sm:px-6">
-          <div className="mx-auto max-w-4xl">
-            <SectionHeading>Infographic</SectionHeading>
-            <motion.button
-              type="button"
-              onClick={openInfographic}
-              aria-label={`Open ${product.infographic.title} infographic`}
-              whileHover={{ y: -4 }}
-              transition={{ type: "spring", stiffness: 300, damping: 24 }}
-              className="block w-full overflow-hidden rounded-2xl border-2 border-white shadow-[0_20px_50px_-15px_rgba(15,23,42,0.25)] ring-1 ring-black/10 cursor-zoom-in"
-            >
-              <div className="flex items-center gap-2 bg-gradient-to-b from-neutral-100 to-neutral-200 px-4 py-2.5">
-                <span className="size-3 rounded-full bg-[#ff5f57]" />
-                <span className="size-3 rounded-full bg-[#febc2e]" />
-                <span className="size-3 rounded-full bg-[#28c840]" />
-                <span className="flex-1 pr-12 text-center text-xs font-medium text-neutral-500">
-                  {product.infographic.title}
-                </span>
-              </div>
-              <div className="aspect-[3/2] bg-neutral-50">
-                <img
-                  src={product.infographic.src}
-                  alt={product.infographic.caption}
-                  width={product.infographic.w}
-                  height={product.infographic.h}
-                  loading="eager"
-                  decoding="async"
-                  className="h-full w-full object-contain"
-                />
-              </div>
-            </motion.button>
-            {product.infographic.caption && (
-              <p className="mt-3 text-center text-sm text-slate-500">{product.infographic.caption}</p>
-            )}
+          <div className="mx-auto max-w-7xl">
+            <ProductDetailGrid
+              productId={productId}
+              onOpenInfographic={openInfographic}
+              onOpenDatExplorer={openDatExplorer}
+            />
           </div>
         </div>
-
-        {/* ── Overview ─────────────────────────────────────────────── */}
-        {!isTodo(product.overview) && (
-          <div className="bg-white/60 px-4 py-16 sm:px-6">
-            <div className="mx-auto max-w-4xl">
-              <SectionHeading>Overview</SectionHeading>
-              <p className="text-base leading-relaxed text-slate-700 sm:text-lg">{product.overview}</p>
-            </div>
-          </div>
-        )}
-
-        {/* ── Key capabilities ─────────────────────────────────────── */}
-        {product.capabilities.length > 0 && (
-          <div className="bg-white px-4 py-16 sm:px-6">
-            <div className="mx-auto max-w-4xl">
-              <SectionHeading>Key capabilities</SectionHeading>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {product.capabilities.map((cap, i) => (
-                  <NumberedCard key={i} n={i + 1} text={cap} />
-                ))}
-              </div>
-              {product.capabilitiesNote && (
-                <p className="mt-5 text-xs italic text-slate-400">{product.capabilitiesNote}</p>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* ── DAT: Analytical domains ──────────────────────────────── */}
-        {productId === "dat" && product.domains && product.domains.length > 0 && (
-          <div className="bg-white/60 px-4 py-16 sm:px-6">
-            <div className="mx-auto max-w-4xl">
-              <SectionHeading>Analytical domains</SectionHeading>
-              <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-                <table className="w-full text-left text-sm">
-                  <thead>
-                    <tr className="border-b border-slate-200 bg-slate-50">
-                      <th className="px-5 py-3 font-semibold text-slate-600">Domain</th>
-                      <th className="px-5 py-3 font-semibold text-slate-600">Business question</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {product.domains.map((row) => (
-                      <tr key={row.domain} className="hover:bg-slate-50/50">
-                        <td className="px-5 py-3 font-medium text-navy">{row.domain}</td>
-                        <td className="px-5 py-3 text-slate-600">{row.question}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ── DAT: Architecture ────────────────────────────────────── */}
-        {productId === "dat" && product.architecture && product.architecture.length > 0 && (
-          <div className="bg-white px-4 py-16 sm:px-6">
-            <div className="mx-auto max-w-5xl">
-              <SectionHeading>Architecture — Sri Lanka pattern</SectionHeading>
-              {/* Horizontal on md+, vertical on mobile */}
-              <div className="flex flex-col gap-0 md:flex-row md:items-start">
-                {product.architecture.map((step, i) => (
-                  <div key={step.label} className="flex flex-col md:flex-row md:items-center">
-                    <div className="flex flex-col items-center text-center">
-                      <div className="flex size-10 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
-                        {i + 1}
-                      </div>
-                      <p className="mt-2 max-w-[110px] text-xs font-semibold text-navy">
-                        {step.label}
-                      </p>
-                      {step.detail && (
-                        <p className="mt-1 max-w-[110px] text-[10px] leading-snug text-slate-500">
-                          {step.detail}
-                        </p>
-                      )}
-                    </div>
-                    {i < product.architecture!.length - 1 && (
-                      <>
-                        {/* Arrow: right on md+, down on mobile */}
-                        <span className="mx-3 hidden text-xl text-slate-300 md:block" aria-hidden="true">→</span>
-                        <span className="my-2 block self-center text-xl text-slate-300 md:hidden" aria-hidden="true">↓</span>
-                      </>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* ── DAT: Dashboards (inline grouped grid) ────────────────── */}
         {productId === "dat" && (
@@ -323,105 +182,6 @@ export default function CustomsProductPage({ productId }: Props) {
           </div>
         )}
 
-        {/* ── Business value ───────────────────────────────────────── */}
-        {product.businessValue.length > 0 && (
-          <div className="bg-white px-4 py-16 sm:px-6">
-            <div className="mx-auto max-w-4xl">
-              <SectionHeading>Business value</SectionHeading>
-              <ul className="space-y-4">
-                {product.businessValue.map((v, i) => (
-                  <ValuePoint key={i} text={v} />
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        {/* ── Potential application areas ──────────────────────────── */}
-        {product.applicationAreas && product.applicationAreas.length > 0 && (
-          <div className="bg-white/60 px-4 py-16 sm:px-6">
-            <div className="mx-auto max-w-4xl">
-              <SectionHeading>Potential application areas</SectionHeading>
-              <div className="flex flex-wrap gap-3">
-                {product.applicationAreas.map((area) => (
-                  <span
-                    key={area}
-                    className="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm font-medium text-emerald-800 shadow-sm"
-                  >
-                    {area}
-                  </span>
-                ))}
-              </div>
-              <p className="mt-5 text-xs italic text-slate-400">
-                These are potential application areas; individual workflows must be confirmed during requirements assessment.
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* ── Who benefits ─────────────────────────────────────────── */}
-        {product.audiences.length > 0 && (
-          <div className="bg-white/60 px-4 py-16 sm:px-6">
-            <div className="mx-auto max-w-4xl">
-              <SectionHeading>Who benefits</SectionHeading>
-              <div className="flex flex-wrap gap-3">
-                {product.audiences.map((a) => (
-                  <span
-                    key={a}
-                    className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm"
-                  >
-                    {a}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ── Roadmap ──────────────────────────────────────────────── */}
-        {product.futureEnhancements.length > 0 && (
-          <div className="bg-white px-4 py-16 sm:px-6">
-            <div className="mx-auto max-w-4xl">
-              <div className="mb-8 flex flex-wrap items-baseline gap-3">
-                <h2 className="text-2xl font-extrabold tracking-tight text-navy sm:text-3xl">
-                  Potential future enhancements
-                </h2>
-         
-              </div>
-              <ul className="space-y-3">
-                {product.futureEnhancements.map((f, i) => (
-                  <li key={i} className="flex gap-3 text-slate-600">
-                    <span className="mt-0.5 text-slate-300" aria-hidden="true">◦</span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        )}
-
-        {/* ── Sri Lanka reference ──────────────────────────────────── */}
-        {!isTodo(product.slReference) && (
-          <div className="bg-white/60 px-4 py-16 sm:px-6">
-            <div className="mx-auto max-w-4xl">
-              <SectionHeading>Sri Lanka reference</SectionHeading>
-              <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-                <img
-                  src="/logo/sl-customs.png"
-                  alt="Sri Lanka Customs emblem"
-                  className="mb-4 h-16 w-auto"
-                />
-                <p className="text-base text-slate-700">{product.slReference}</p>
-                {product.slReferenceUnconfirmed && (
-                  <p className="mt-3 text-xs italic text-amber-600">
-                    Exact delivered scope still needs confirming before external publishing.
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* ── Closing CTA ──────────────────────────────────────────── */}
         {!isTodo(product.conversationStarter) && (
           <div className="bg-gradient-to-br from-navy via-slate-800 to-slate-900 px-4 py-20 sm:px-6">
@@ -439,40 +199,42 @@ export default function CustomsProductPage({ productId }: Props) {
           </div>
         )}
 
-        {/* ── Prev / Next products ─────────────────────────────────── */}
-        <div className="border-t border-slate-200 bg-white px-4 py-10 sm:px-6">
-          <div className="mx-auto flex max-w-4xl items-center justify-between gap-4">
-            {prevId ? (
-              <Link
-                to={`/customs/${prevId}`}
-                className="group inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-navy shadow-sm hover:border-brand hover:text-brand"
-              >
-                <span aria-hidden="true">←</span>
-                {PRODUCT_NAMES[prevId]}
-              </Link>
-            ) : <div />}
+        {/* ── Prev / Next products — hidden in overlay mode ────────── */}
+        {!isOverlay && (
+          <div className="border-t border-slate-200 bg-white px-4 py-10 sm:px-6">
+            <div className="mx-auto flex max-w-4xl items-center justify-between gap-4">
+              {prevId ? (
+                <Link
+                  to={`/customs/${prevId}`}
+                  className="group inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-navy shadow-sm hover:border-brand hover:text-brand"
+                >
+                  <span aria-hidden="true">←</span>
+                  {PRODUCT_NAMES[prevId]}
+                </Link>
+              ) : <div />}
 
-            <Link
-              to="/#customs"
-              className="text-sm text-slate-500 hover:text-navy"
-            >
-              All products
-            </Link>
-
-            {nextId ? (
               <Link
-                to={`/customs/${nextId}`}
-                className="group inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-navy shadow-sm hover:border-brand hover:text-brand"
+                to="/#customs"
+                className="text-sm text-slate-500 hover:text-navy"
               >
-                {PRODUCT_NAMES[nextId]}
-                <span aria-hidden="true">→</span>
+                All products
               </Link>
-            ) : <div />}
+
+              {nextId ? (
+                <Link
+                  to={`/customs/${nextId}`}
+                  className="group inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-navy shadow-sm hover:border-brand hover:text-brand"
+                >
+                  {PRODUCT_NAMES[nextId]}
+                  <span aria-hidden="true">→</span>
+                </Link>
+              ) : <div />}
+            </div>
           </div>
-        </div>
+        )}
       </main>
 
-      <Footer />
+      {!isOverlay && <Footer />}
 
       {/* ── Lightbox for infographic ─────────────────────────────── */}
       <Lightbox

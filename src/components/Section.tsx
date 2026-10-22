@@ -3,16 +3,16 @@ import { motion, AnimatePresence, useReducedMotion } from "motion/react";
 import type { SectionData, Infographic } from "../data/sections";
 import WindowCard from "./WindowCard";
 import CollectionSummary from "./CollectionSummary";
-import CustomsSectionContent from "./CustomsSectionContent";
-import CustomsProductsStack from "./CustomsProductsStack";
+import CustomsSectionContent from "./customs/CustomsSectionContent";
 
 interface Props {
   section: SectionData;
   index: number;
   onOpen: (item: Infographic) => void;
+  onOpenProduct?: (id: string) => void;
 }
 
-export default function Section({ section, index, onOpen }: Props) {
+export default function Section({ section, index, onOpen, onOpenProduct }: Props) {
   const isCollection = (section.extras?.length ?? 0) > 0;
   const [expanded, setExpanded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -60,12 +60,12 @@ export default function Section({ section, index, onOpen }: Props) {
         </motion.div>
 
         {/* Customs section: extra intro content above the card grid */}
-        {section.id === "customs" && <CustomsSectionContent />}
+        {section.id === "customs" && (
+          <CustomsSectionContent onOpenProduct={(id) => onOpenProduct?.(id)} />
+        )}
 
-        {/* Content area */}
-        {section.id === "customs" ? (
-          <CustomsProductsStack />
-        ) : isCollection ? (
+        {/* Content area — customs is handled entirely by CustomsSectionContent above */}
+        {section.id !== "customs" && (isCollection ? (
           <AnimatePresence mode="wait">
             {!expanded ? (
               <motion.div
@@ -131,7 +131,7 @@ export default function Section({ section, index, onOpen }: Props) {
               />
             </motion.div>
           </div>
-        )}
+        ))}
       </div>
     </section>
   );

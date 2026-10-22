@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import type { Dashboard } from "../data/dashboards";
+import type { Dashboard } from "../../data/dashboards";
 
 interface Props {
   dashboard: Dashboard;

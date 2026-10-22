@@ -1,4 +1,4 @@
-import Wordmark from "./Wordmark";
+import Wordmark from "./ui/Wordmark";
 import { SL_CUSTOMS_LOGO } from "../data/sections";
 
 export default function Footer() {

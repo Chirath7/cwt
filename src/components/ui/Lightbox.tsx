@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import type { Infographic } from "../data/sections";
+import type { Infographic } from "../../data/sections";
 
 interface Props {
   items: Infographic[];

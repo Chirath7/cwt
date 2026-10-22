@@ -1,5 +1,5 @@
 import { motion, useReducedMotion } from "motion/react";
-import { datDashboards } from "../data/dashboards";
+import { datDashboards } from "../../data/dashboards";
 import DashboardCard from "./DashboardCard";
 
 export const DASHBOARD_GROUPS = [

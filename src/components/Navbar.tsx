@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 import { sections } from "../data/sections";
-import Wordmark from "./Wordmark";
+import Wordmark from "./ui/Wordmark";
 import ContactModal from "./ContactModal";
 
 export default function Navbar() {
