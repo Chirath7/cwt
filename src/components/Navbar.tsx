@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, useScroll, useSpring } from "motion/react";
-import Wordmark from "./ui/Wordmark";
 import ContactModal from "./ContactModal";
 
 const NAV_ITEMS = [
@@ -64,7 +63,11 @@ export default function Navbar() {
             <header>
               <div className="flex h-14 items-center justify-between px-4 sm:px-5">
                 <Link to="/" aria-label="Creative Web Technologies home">
-                  <Wordmark />
+                  <img
+                    src="/logo/Creative Web Technologies LOGO.png"
+                    alt="Creative Web Technologies"
+                    className="h-15 w-auto object-contain"
+                  />
                 </Link>
 
                 {/* Desktop nav (hidden on mobile) */}
