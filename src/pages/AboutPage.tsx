@@ -19,7 +19,7 @@ export default function AboutPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-16">
+      <main className="pt-20">
         {aboutSections.map((s, si) => (
           <Section
             key={s.id}

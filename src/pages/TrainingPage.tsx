@@ -15,7 +15,7 @@ export default function TrainingPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-16">
+      <main className="pt-20">
         <Section
           section={trainingSection}
           index={0}

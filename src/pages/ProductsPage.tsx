@@ -21,7 +21,7 @@ export default function ProductsPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-16">
+      <main className="pt-20">
         {productsSections.map((s, si) => (
           <Section
             key={s.id}

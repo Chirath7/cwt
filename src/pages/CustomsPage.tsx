@@ -40,7 +40,7 @@ export default function CustomsPage() {
   return (
     <>
       <Navbar />
-      <main className="pt-16">
+      <main className="pt-20">
         <Section
           section={customsSection}
           index={0}
