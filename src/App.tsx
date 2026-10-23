@@ -1,13 +1,22 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
+import AboutPage from "./pages/AboutPage";
+import CustomsPage from "./pages/CustomsPage";
 import CustomsProductPage from "./pages/CustomsProductPage";
+import ProductsPage from "./pages/ProductsPage";
+import TrainingPage from "./pages/TrainingPage";
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if (hash) {
+      const el = document.getElementById(hash.slice(1));
+      if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth" }), 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
   return null;
 }
 
@@ -16,10 +25,14 @@ export default function App() {
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/"             element={<LandingPage />} />
+        <Route path="/about"        element={<AboutPage />} />
+        <Route path="/customs"      element={<CustomsPage />} />
         <Route path="/customs/arms" element={<CustomsProductPage productId="arms" />} />
         <Route path="/customs/dat"  element={<CustomsProductPage productId="dat"  />} />
         <Route path="/customs/cdns" element={<CustomsProductPage productId="cdns" />} />
+        <Route path="/products"     element={<ProductsPage />} />
+        <Route path="/training"     element={<TrainingPage />} />
       </Routes>
     </BrowserRouter>
   );

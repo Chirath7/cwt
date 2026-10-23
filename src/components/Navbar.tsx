@@ -1,29 +1,26 @@
 import { useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
-import { sections } from "../data/sections";
 import Wordmark from "./ui/Wordmark";
 import ContactModal from "./ContactModal";
 
+const NAV_ITEMS = [
+  { label: "About Us",     href: "/about" },
+  { label: "CWT Customs",  href: "/customs" },
+  { label: "Products",     href: "/products" },
+  { label: "CWT Training", href: "/training" },
+] as const;
+
 export default function Navbar() {
-  const [active, setActive] = useState("");
+  const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [contactOpen, setContactOpen] = useState(false);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
-  // Highlight active section via IntersectionObserver
-  useEffect(() => {
-    const io = new IntersectionObserver(
-      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
-      { rootMargin: "-45% 0px -50% 0px" },
-    );
-    ["top", ...sections.map((s) => s.id)].forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) io.observe(el);
-    });
-    return () => io.disconnect();
-  }, []);
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(href + "/");
 
   // Close on Escape
   useEffect(() => {
@@ -50,22 +47,22 @@ export default function Navbar() {
     <>
     <header className="fixed inset-x-0 top-0 z-40 border-b border-black/5 bg-white/70 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <a href="#top" aria-label="Creative Web Technologies home">
+        <Link to="/" aria-label="Creative Web Technologies home">
           <Wordmark />
-        </a>
+        </Link>
 
         {/* Desktop nav */}
         <nav aria-label="Main navigation" className="hidden gap-1 md:flex md:items-center">
-          {sections.map((s) => (
-            <a
-              key={s.id}
-              href={`#${s.id}`}
+          {NAV_ITEMS.map((item) => (
+            <Link
+              key={item.href}
+              to={item.href}
               className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
-                active === s.id ? "bg-navy text-white" : "text-slate-600 hover:text-navy"
+                isActive(item.href) ? "bg-navy text-white" : "text-slate-600 hover:text-navy"
               }`}
             >
-              {s.title}
-            </a>
+              {item.label}
+            </Link>
           ))}
           <button
             type="button"
@@ -86,7 +83,7 @@ export default function Navbar() {
           className="flex size-11 items-center justify-center rounded-lg text-navy hover:bg-navy/10 md:hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           onClick={() => setMenuOpen((o) => !o)}
         >
-          {/* Simple animated hamburger → ✕ */}
+          {/* Animated hamburger → ✕ */}
           <span className="relative flex h-5 w-5 flex-col items-center justify-center gap-1.5" aria-hidden="true">
             <span
               className={`block h-0.5 w-5 rounded bg-current transition-all duration-200 ${menuOpen ? "translate-y-2 rotate-45" : ""}`}
@@ -119,20 +116,20 @@ export default function Navbar() {
             transition={{ type: "spring", damping: 32, stiffness: 320 }}
           >
             <nav aria-label="Mobile navigation" className="flex flex-col divide-y divide-black/5 px-6 py-4">
-              {sections.map((s) => (
-                <a
-                  key={s.id}
-                  href={`#${s.id}`}
+              {NAV_ITEMS.map((item, i) => (
+                <Link
+                  key={item.href}
+                  to={item.href}
                   onClick={closeMenu}
                   className={`py-4 text-lg font-semibold transition-colors ${
-                    active === s.id ? "text-brand" : "text-navy hover:text-brand"
+                    isActive(item.href) ? "text-brand" : "text-navy hover:text-brand"
                   }`}
                 >
                   <span className="mr-3 text-sm font-normal text-slate-400">
-                    {String(s.order).padStart(2, "0")}
+                    {String(i + 1).padStart(2, "0")}
                   </span>
-                  {s.title}
-                </a>
+                  {item.label}
+                </Link>
               ))}
               <button
                 type="button"

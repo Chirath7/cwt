@@ -92,7 +92,7 @@ export default function CustomsProductPage({ productId, isOverlay = false }: Pro
             {/* Back link — only shown on the standalone page, not in the overlay */}
             {!isOverlay && (
               <Link
-                to="/#customs"
+                to="/customs"
                 className="mb-8 inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white"
               >
                 <span aria-hidden="true">←</span> Back to CWT Customs
@@ -184,17 +184,27 @@ export default function CustomsProductPage({ productId, isOverlay = false }: Pro
 
         {/* ── Closing CTA ──────────────────────────────────────────── */}
         {!isTodo(product.conversationStarter) && (
-          <div className="bg-gradient-to-br from-navy via-slate-800 to-slate-900 px-4 py-20 sm:px-6">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="mb-8 text-lg font-medium text-white/80 sm:text-xl">
-                "{product.conversationStarter}"
+          <div className="dot-bg relative overflow-hidden border-t border-slate-200 bg-canvas px-4 py-20 sm:px-6">
+            {/* Brand glow — mirrors the hero */}
+            <div className="pointer-events-none absolute left-1/2 top-1/2 h-[32rem] w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/10 blur-3xl" />
+            <div className="relative mx-auto max-w-3xl text-center">
+              {/* Eyebrow */}
+              <p className="mb-4 text-xs font-bold uppercase tracking-[0.22em] text-brand">
+                Start a conversation
               </p>
+              {/* Quote */}
+              <blockquote className="mb-10 text-lg font-medium leading-relaxed text-navy sm:text-xl">
+                "{product.conversationStarter}"
+              </blockquote>
+              {/* CTA */}
               <a
                 href="mailto:info@cwt.lk"
-                className="inline-flex items-center gap-2 rounded-full bg-brand px-8 py-3 text-sm font-semibold text-white shadow-lg hover:bg-brand/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                className="inline-flex items-center gap-2 rounded-full bg-brand px-8 py-3 text-sm font-semibold text-white shadow-[0_4px_24px_-4px_rgba(31,111,235,0.45)] transition-shadow hover:shadow-[0_6px_28px_-4px_rgba(31,111,235,0.6)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
               >
                 Get in touch
+                <span aria-hidden="true">→</span>
               </a>
+              <p className="mt-4 text-sm text-slate-400">info@cwt.lk</p>
             </div>
           </div>
         )}
@@ -214,7 +224,7 @@ export default function CustomsProductPage({ productId, isOverlay = false }: Pro
               ) : <div />}
 
               <Link
-                to="/#customs"
+                to="/customs"
                 className="text-sm text-slate-500 hover:text-navy"
               >
                 All products

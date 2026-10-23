@@ -1,14 +1,11 @@
-import { motion, useScroll, useTransform } from "motion/react";
+import { Link } from "react-router-dom";
+import { motion } from "motion/react";
 
 export default function Hero() {
-  const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 500], [0, 120]);
-  const opacity = useTransform(scrollY, [0, 450], [1, 0]);
-
   return (
     <section id="top" className="dot-bg relative flex min-h-screen items-center justify-center overflow-hidden px-4">
       <div className="pointer-events-none absolute -top-40 left-1/2 h-[40rem] w-[40rem] -translate-x-1/2 rounded-full bg-brand/15 blur-3xl" />
-      <motion.div style={{ y, opacity }} className="relative text-center">
+      <div className="relative text-center">
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
@@ -37,19 +34,21 @@ export default function Hero() {
         >
           Transforming Data into Intelligence. Optimizing Business for a Better Tomorrow.
         </motion.p>
-        <motion.a
-          href="#cwt-2-0"
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="mt-10 inline-flex flex-col items-center gap-2 text-sm font-medium text-slate-500"
+          className="mt-10"
         >
-          Scroll to explore
-          <motion.span animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 1.6 }}>
-            ↓
-          </motion.span>
-        </motion.a>
-      </motion.div>
+          <Link
+            to="/about"
+            className="inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            Explore CWT
+            <span aria-hidden="true">→</span>
+          </Link>
+        </motion.div>
+      </div>
     </section>
   );
 }
