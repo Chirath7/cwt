@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AnimatePresence } from "motion/react";
 import { sections } from "../data/sections";
 import type { ProductId } from "../data/customsProducts";
@@ -47,6 +48,16 @@ export default function CustomsPage() {
           onOpen={() => {}}
           onOpenProduct={(id) => openProduct(id as ProductId)}
         />
+        <div className="py-16 text-center">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-brand">Our clients</p>
+          <Link
+            to="/products"
+            className="inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            Our Customers
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
       </main>
       <Footer />
 

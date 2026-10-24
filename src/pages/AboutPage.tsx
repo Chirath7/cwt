@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { sections } from "../data/sections";
 import type { SectionData, Infographic } from "../data/sections";
 import Navbar from "../components/Navbar";
@@ -31,6 +32,16 @@ export default function AboutPage() {
             }}
           />
         ))}
+        <div className="py-16 text-center">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-brand">What we do</p>
+          <Link
+            to="/customs"
+            className="inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            Explore Customs
+            <span aria-hidden="true">→</span>
+          </Link>
+        </div>
       </main>
       <Footer />
       <Lightbox

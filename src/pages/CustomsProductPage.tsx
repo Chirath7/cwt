@@ -93,7 +93,7 @@ export default function CustomsProductPage({ productId, isOverlay = false }: Pro
             {!isOverlay && (
               <Link
                 to="/customs"
-                className="mb-8 inline-flex items-center gap-1.5 text-sm text-white/60 hover:text-white"
+                className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2.5 text-sm font-semibold text-white/80 transition-all hover:border-white hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
               >
                 <span aria-hidden="true">←</span> Back to CWT Customs
               </Link>
@@ -216,7 +216,7 @@ export default function CustomsProductPage({ productId, isOverlay = false }: Pro
               {prevId ? (
                 <Link
                   to={`/customs/${prevId}`}
-                  className="group inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-navy shadow-sm hover:border-brand hover:text-brand"
+                  className="inline-flex items-center gap-2 rounded-full border border-navy/20 px-5 py-2.5 text-sm font-semibold text-navy transition-all hover:border-navy hover:bg-navy hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                 >
                   <span aria-hidden="true">←</span>
                   {PRODUCT_NAMES[prevId]}
@@ -225,7 +225,7 @@ export default function CustomsProductPage({ productId, isOverlay = false }: Pro
 
               <Link
                 to="/customs"
-                className="text-sm text-slate-500 hover:text-navy"
+                className="rounded-full px-4 py-2 text-sm font-semibold text-slate-500 transition-colors hover:bg-slate-100 hover:text-navy"
               >
                 All products
               </Link>
@@ -233,7 +233,7 @@ export default function CustomsProductPage({ productId, isOverlay = false }: Pro
               {nextId ? (
                 <Link
                   to={`/customs/${nextId}`}
-                  className="group inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-navy shadow-sm hover:border-brand hover:text-brand"
+                  className="inline-flex items-center gap-2 rounded-full bg-navy px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                 >
                   {PRODUCT_NAMES[nextId]}
                   <span aria-hidden="true">→</span>

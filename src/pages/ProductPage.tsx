@@ -46,7 +46,7 @@ export default function ProductPage() {
           <div className="mx-auto max-w-4xl">
             <Link
               to="/products"
-              className="mb-8 inline-flex items-center gap-1.5 text-sm text-white/60 transition-colors hover:text-white"
+              className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/30 px-5 py-2.5 text-sm font-semibold text-white/80 transition-all hover:border-white hover:bg-white/10 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
             >
               <span aria-hidden="true">←</span> Back to Our Products
             </Link>
