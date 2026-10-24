@@ -5,9 +5,11 @@ interface Props {
   item: Infographic;
   onOpen: () => void;
   priority?: boolean;
+  /** Override the image frame aspect ratio. Defaults to "3/2" (landscape). Pass "2/3" for portrait infographics. */
+  aspectRatio?: string;
 }
 
-export default function WindowCard({ item, onOpen, priority }: Props) {
+export default function WindowCard({ item, onOpen, priority, aspectRatio = "3/2" }: Props) {
   const isDatExplorer = item.action === "dat-explorer";
 
   return (
@@ -29,8 +31,8 @@ export default function WindowCard({ item, onOpen, priority }: Props) {
           <span className="size-3 rounded-full bg-[#28c840]" />
           <span className="flex-1 pr-12 text-center text-xs font-medium text-neutral-500">{item.title}</span>
         </div>
-        {/* Fixed 3:2 frame */}
-        <div className="relative aspect-[3/2] bg-neutral-50">
+        {/* Image frame — aspect ratio driven by prop */}
+        <div className="relative bg-neutral-50" style={{ aspectRatio }}>
           <img
             src={item.src}
             alt={item.title}

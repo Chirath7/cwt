@@ -54,10 +54,10 @@ export const sections: SectionData[] = [
     title: " Customs",
     blurb: "Digital solutions built with and for Sri Lanka Customs.",
     badge: SL_CUSTOMS_LOGO,
-    cover: img("customs-01-arms.webp", "ARMS", "Automated Risk Management System", 1312, 1199, { route: "/customs/arms" }),
+    cover: img("customs/customs-01-arms.webp", "ARMS", "Automated Risk Management System", 1312, 1199, { route: "/customs/arms" }),
     extras: [
-      img("customs-02-cdns 1.webp", "CDNS", "Customs Document Notification System", 1536, 1024, { route: "/customs/cdns" }),
-      img("customs-03-dat 1.webp", "DAT", "Data Analytics Tool", 1536, 1024, { action: "dat-explorer", route: "/customs/dat" }),
+      img("customs/customs-02-cdns 1.webp", "CDNS", "Customs Document Notification System", 1536, 1024, { route: "/customs/cdns" }),
+      img("customs/customs-03-dat 1.webp", "DAT", "Data Analytics Tool", 1536, 1024, { action: "dat-explorer", route: "/customs/dat" }),
     ],
   },
   {

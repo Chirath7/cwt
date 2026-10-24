@@ -114,7 +114,7 @@ export const customsProducts: Record<ProductId, CustomsProduct> = {
     conversationStarter:
       "We'd welcome a discussion on how administrations can strengthen risk-based targeting and use operational data more effectively to support inspection and enforcement decisions.",
     infographic: {
-      src: "/infographics/customs-01-arms.webp",
+      src: "/infographics/customs/customs-01-arms.webp",
       title: "ARMS",
       caption: "Automated Risk Management System",
       w: 1312,
@@ -174,7 +174,7 @@ export const customsProducts: Record<ProductId, CustomsProduct> = {
     conversationStarter:
       "Our Sri Lanka Customs implementation includes 16 delivered dashboard deliverables. We'd be glad to exchange experience on Customs data integration, analytics and management reporting.",
     infographic: {
-      src: "/infographics/customs-03-dat 1.webp",
+      src: "/infographics/customs/customs-03-dat 1.webp",
       title: "DAT",
       caption: "Data Analytics Tool",
       w: 1536,
@@ -258,7 +258,7 @@ export const customsProducts: Record<ProductId, CustomsProduct> = {
     conversationStarter:
       "Make relevant Customs declaration and cargo-status information easier to access, helping Customs and trade stakeholders coordinate their activities more effectively — we'd welcome a conversation on how this applies to your environment.",
     infographic: {
-      src: "/infographics/customs-02-cdns 1.webp",
+      src: "/infographics/customs/customs-02-cdns 1.webp",
       title: "CDNS",
       caption: "Customs Document Notification System",
       w: 1536,

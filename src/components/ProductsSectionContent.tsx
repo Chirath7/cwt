@@ -23,7 +23,7 @@ export default function ProductsSectionContent() {
           className="group overflow-hidden rounded-xl border border-slate-200 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-brand/40 hover:shadow-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
         >
           <img
-            src={`/product-buttons/${product.id}.webp`}
+            src={`/buttons/product-buttons/${product.id}.webp`}
             alt={product.name}
             loading="lazy"
             decoding="async"
