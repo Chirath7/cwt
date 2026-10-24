@@ -79,7 +79,7 @@ export default function CustomsProductOverlay({ productId, onClose }: Props) {
       {/* Sticky header with close button */}
       <div className="flex shrink-0 items-center justify-between border-b border-slate-200 bg-white/90 px-4 py-3 backdrop-blur-sm">
         <span className="text-sm font-semibold text-navy">
-          CWT Customs — {product.fullName}
+          Customs — {product.fullName}
         </span>
         <button
           ref={closeRef}

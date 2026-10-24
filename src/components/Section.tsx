@@ -4,6 +4,8 @@ import type { SectionData, Infographic } from "../data/sections";
 import WindowCard from "./WindowCard";
 import CollectionSummary from "./CollectionSummary";
 import CustomsSectionContent from "./customs/CustomsSectionContent";
+import CustomersSectionContent from "./CustomersSectionContent";
+import ProductsSectionContent from "./ProductsSectionContent";
 
 interface Props {
   section: SectionData;
@@ -64,8 +66,14 @@ export default function Section({ section, index, onOpen, onOpenProduct }: Props
           <CustomsSectionContent onOpenProduct={(id) => onOpenProduct?.(id)} />
         )}
 
-        {/* Content area — customs is handled entirely by CustomsSectionContent above */}
-        {section.id !== "customs" && (isCollection ? (
+        {/* Customers section: button grid navigating to per-client pages */}
+        {section.id === "customers" && <CustomersSectionContent />}
+
+        {/* Products section: button grid navigating to per-product pages */}
+        {section.id === "products" && <ProductsSectionContent />}
+
+        {/* Content area — customs, customers, and products are handled by their own components above */}
+        {section.id !== "customs" && section.id !== "customers" && section.id !== "products" && (isCollection ? (
           <AnimatePresence mode="wait">
             {!expanded ? (
               <motion.div

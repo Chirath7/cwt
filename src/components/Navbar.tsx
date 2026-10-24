@@ -5,13 +5,13 @@ import ContactModal from "./ContactModal";
 
 const NAV_ITEMS = [
   { label: "About Us",     href: "/about" },
-  { label: "CWT Customs",  href: "/customs" },
+  { label: "Customs",  href: "/customs" },
   { label: "Products",     href: "/products" },
-  { label: "CWT Training", href: "/training" },
+  { label: "Training", href: "/training" },
 ] as const;
 
-// Closed pill: 56px (h-14 nav row) + 1px (progress bar)
-const PILL_H = "57px";
+// Closed pill: 64px (h-16 nav row) + 1px (progress bar)
+const PILL_H = "65px";
 
 export default function Navbar() {
   const { pathname } = useLocation();
@@ -41,7 +41,7 @@ export default function Navbar() {
   return (
     <>
       <div className="fixed left-3 right-3 top-3 z-40 flex justify-center sm:left-4 sm:right-4 sm:top-4">
-        <div className="w-full max-w-6xl">
+        <div className="w-full max-w-7xl">
 
           {/*
            * Single morphing container.
@@ -61,38 +61,45 @@ export default function Navbar() {
 
             {/* ── Always-visible navbar row ───────────────────────── */}
             <header>
-              <div className="flex h-14 items-center justify-between px-4 sm:px-5">
-                <Link to="/" aria-label="Creative Web Technologies home">
-                  <img
-                    src="/logo/Creative Web Technologies LOGO.png"
-                    alt="Creative Web Technologies"
-                    className="h-15 w-auto object-contain"
-                  />
-                </Link>
+              <div className="flex h-16 items-center px-5 sm:px-8">
+                {/* Logo — left */}
+                <div className="flex flex-1 items-center">
+                  <Link to="/" aria-label="Creative Web Technologies home">
+                    <img
+                      src="/logo/Creative Web Technologies LOGO.png"
+                      alt="Creative Web Technologies"
+                      className="h-15 w-auto object-contain"
+                    />
+                  </Link>
+                </div>
 
-                {/* Desktop nav (hidden on mobile) */}
+                {/* Nav links — centered (hidden on mobile) */}
                 <nav aria-label="Main navigation" className="hidden gap-1 md:flex md:items-center">
                   {NAV_ITEMS.map((item) => (
                     <Link
                       key={item.href}
                       to={item.href}
-                      className={`rounded-full px-3 py-1.5 text-sm font-medium transition-colors ${
+                      className={`rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                         isActive(item.href)
                           ? "bg-navy text-white"
-                          : "text-slate-600 hover:text-navy"
+                          : "text-slate-600 hover:bg-slate-100 hover:text-navy"
                       }`}
                     >
                       {item.label}
                     </Link>
                   ))}
+                </nav>
+
+                {/* Contact Us — right (hidden on mobile) */}
+                <div className="hidden flex-1 justify-end md:flex">
                   <button
                     type="button"
                     onClick={() => setContactOpen(true)}
-                    className="ml-2 rounded-full border border-brand/30 px-3 py-1.5 text-sm font-medium text-brand transition-colors hover:bg-brand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                    className="rounded-full border border-brand/30 px-4 py-2 text-sm font-medium text-brand transition-colors hover:bg-brand hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                   >
                     Contact Us
                   </button>
-                </nav>
+                </div>
 
                 {/* Hamburger (mobile only) */}
                 <button
@@ -148,7 +155,7 @@ export default function Navbar() {
                     onClick={closeMenu}
                     tabIndex={menuOpen ? 0 : -1}
                     className={`py-3.5 text-base font-semibold transition-colors ${
-                      isActive(item.href) ? "text-brand" : "text-navy hover:text-brand"
+                      isActive(item.href) ? "text-brand" : "text-navy hover:text-brand hover:pl-1"
                     }`}
                   >
                     <span className="mr-3 text-xs font-normal text-slate-400">

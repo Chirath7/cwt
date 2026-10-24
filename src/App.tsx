@@ -5,6 +5,8 @@ import AboutPage from "./pages/AboutPage";
 import CustomsPage from "./pages/CustomsPage";
 import CustomsProductPage from "./pages/CustomsProductPage";
 import ProductsPage from "./pages/ProductsPage";
+import CustomerPage from "./pages/CustomerPage";
+import ProductPage from "./pages/ProductPage";
 import TrainingPage from "./pages/TrainingPage";
 
 function ScrollToTop() {
@@ -31,8 +33,10 @@ export default function App() {
         <Route path="/customs/arms" element={<CustomsProductPage productId="arms" />} />
         <Route path="/customs/dat"  element={<CustomsProductPage productId="dat"  />} />
         <Route path="/customs/cdns" element={<CustomsProductPage productId="cdns" />} />
-        <Route path="/products"     element={<ProductsPage />} />
-        <Route path="/training"     element={<TrainingPage />} />
+        <Route path="/products"               element={<ProductsPage />} />
+        <Route path="/customers/:clientId"   element={<CustomerPage />} />
+        <Route path="/products/:productId"   element={<ProductPage />} />
+        <Route path="/training"              element={<TrainingPage />} />
       </Routes>
     </BrowserRouter>
   );

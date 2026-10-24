@@ -10,16 +10,16 @@ interface Props {
 
 const INTEREST_OPTIONS = [
   "General enquiry",
-  "ARMS",
-  "DAT",
-  "CDNS",
+  "Customs",
+  "Products",
+  "Training",
   "Something else",
 ] as const;
 
 const BULLETS = [
   "Response within 24 hours",
   "Free discovery call to scope your requirements",
-  "Direct line to our Customs solutions team",
+  "Direct line to our solutions team",
 ];
 
 export default function ContactModal({ open, onClose }: Props) {
@@ -29,6 +29,7 @@ export default function ContactModal({ open, onClose }: Props) {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [whatsapp, setWhatsapp] = useState("");
   const [interest, setInterest] = useState("General enquiry");
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
@@ -41,7 +42,7 @@ export default function ContactModal({ open, onClose }: Props) {
       requestAnimationFrame(() => closeRef.current?.focus());
     } else {
       (prevFocusRef.current as HTMLElement | null)?.focus();
-      setName(""); setEmail(""); setInterest("General enquiry");
+      setName(""); setEmail(""); setWhatsapp(""); setInterest("General enquiry");
       setMessage(""); setErrors({}); setSubmitted(false);
     }
   }, [open]);
@@ -96,20 +97,27 @@ export default function ContactModal({ open, onClose }: Props) {
       ? "Website enquiry"
       : `Website enquiry — ${interest}`;
 
-    const body = [
+    const bodyLines = [
       `Name: ${name}`,
       `Email: ${email}`,
+      ...(whatsapp.trim() ? [`WhatsApp: ${whatsapp.trim()}`] : []),
       `Interest: ${interest}`,
       "",
       message,
-    ].join("\n");
+    ];
 
     window.location.href =
-      `mailto:Kolitha@CreativeSoftware.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      `mailto:Kolitha@CreativeSoftware.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join("\n"))}`;
     setSubmitted(true);
   }
 
   const canSubmit = name.trim() && email.trim() && message.trim();
+
+  // Shared input classes for light-theme form fields
+  const inputBase =
+    "w-full rounded-lg border px-3.5 py-2.5 text-sm text-navy bg-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-brand transition";
+  const inputNormal = `${inputBase} border-slate-200 hover:border-slate-300`;
+  const inputError  = `${inputBase} border-red-400`;
 
   return (
     <AnimatePresence>
@@ -133,7 +141,7 @@ export default function ContactModal({ open, onClose }: Props) {
             transition={{ duration: 0.2 }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close button — top-right of the card, adapts colour across the split bg */}
+            {/* Close button */}
             <button
               ref={closeRef}
               type="button"
@@ -150,7 +158,6 @@ export default function ContactModal({ open, onClose }: Props) {
             {/* ── Left branding panel ── */}
             <div className="bg-navy flex flex-col justify-between px-8 py-10 md:px-10 md:w-[42%] text-white shrink-0">
               <div>
-                {/* Decorative quotation mark */}
                 <div
                   className="font-serif text-[5rem] leading-none text-white/10 select-none -mt-4 -ml-2 mb-2 sm:text-[7rem]"
                   aria-hidden="true"
@@ -163,7 +170,7 @@ export default function ContactModal({ open, onClose }: Props) {
                 </h2>
 
                 <p className="text-sm italic text-white/65 leading-relaxed mb-7">
-                  Partnering with Customs administrations on intelligent, data-driven digital solutions.
+                  Transforming Data into Intelligence. Optimizing Business for a Better Tomorrow — Data · Cloud · AI · Optimization.
                 </p>
 
                 <hr className="border-white/15 mb-7" />
@@ -228,9 +235,10 @@ export default function ContactModal({ open, onClose }: Props) {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} noValidate className="space-y-5">
+
                   {/* Full Name */}
                   <div>
-                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
                       Full Name <span className="text-red-500" aria-hidden="true">*</span>
                     </label>
                     <input
@@ -240,14 +248,14 @@ export default function ContactModal({ open, onClose }: Props) {
                       placeholder="Your full name"
                       aria-required="true"
                       aria-invalid={!!errors.name}
-                      className={`w-full rounded-lg border px-3.5 py-2.5 text-sm bg-slate-900 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-brand transition ${errors.name ? "border-red-500" : "border-slate-700 hover:border-slate-600"}`}
+                      className={errors.name ? inputError : inputNormal}
                     />
                     {errors.name && <p className="mt-1.5 text-xs text-red-500" role="alert">{errors.name}</p>}
                   </div>
 
                   {/* Email */}
                   <div>
-                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
                       Email Address <span className="text-red-500" aria-hidden="true">*</span>
                     </label>
                     <input
@@ -257,20 +265,34 @@ export default function ContactModal({ open, onClose }: Props) {
                       placeholder="you@example.com"
                       aria-required="true"
                       aria-invalid={!!errors.email}
-                      className={`w-full rounded-lg border px-3.5 py-2.5 text-sm bg-slate-900 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-brand transition ${errors.email ? "border-red-500" : "border-slate-700 hover:border-slate-600"}`}
+                      className={errors.email ? inputError : inputNormal}
                     />
                     {errors.email && <p className="mt-1.5 text-xs text-red-500" role="alert">{errors.email}</p>}
                   </div>
 
+                  {/* WhatsApp (optional) */}
+                  <div>
+                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
+                      WhatsApp Number
+                    </label>
+                    <input
+                      type="tel"
+                      value={whatsapp}
+                      onChange={(e) => setWhatsapp(e.target.value)}
+                      placeholder="+94 7X XXX XXXX"
+                      className={inputNormal}
+                    />
+                  </div>
+
                   {/* Interest */}
                   <div>
-                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
                       I'm interested in
                     </label>
                     <select
                       value={interest}
                       onChange={(e) => setInterest(e.target.value)}
-                      className="w-full rounded-lg border border-slate-700 hover:border-slate-600 px-3.5 py-2.5 text-sm bg-slate-900 text-white focus:outline-none focus:ring-2 focus:ring-brand transition"
+                      className={inputNormal}
                     >
                       {INTEREST_OPTIONS.map((o) => (
                         <option key={o} value={o}>{o}</option>
@@ -280,7 +302,7 @@ export default function ContactModal({ open, onClose }: Props) {
 
                   {/* Message */}
                   <div>
-                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-400">
+                    <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-slate-500">
                       Message <span className="text-red-500" aria-hidden="true">*</span>
                     </label>
                     <textarea
@@ -290,7 +312,7 @@ export default function ContactModal({ open, onClose }: Props) {
                       placeholder="Tell us about your project or requirements…"
                       aria-required="true"
                       aria-invalid={!!errors.message}
-                      className={`w-full rounded-lg border px-3.5 py-2.5 text-sm bg-slate-900 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-brand transition resize-none ${errors.message ? "border-red-500" : "border-slate-700 hover:border-slate-600"}`}
+                      className={`${errors.message ? inputError : inputNormal} resize-none`}
                     />
                     {errors.message && <p className="mt-1.5 text-xs text-red-500" role="alert">{errors.message}</p>}
                   </div>
@@ -298,10 +320,11 @@ export default function ContactModal({ open, onClose }: Props) {
                   <button
                     type="submit"
                     disabled={!canSubmit}
-                    className="w-full rounded-lg bg-white border border-slate-200 px-4 py-3 text-sm font-semibold text-navy shadow-sm transition hover:bg-slate-50 active:scale-[0.99] disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                    className="w-full rounded-full bg-navy px-4 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-navy/90 active:scale-[0.99] disabled:opacity-40 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
                   >
                     Send Message
                   </button>
+
                 </form>
               )}
             </div>

@@ -51,7 +51,7 @@ export const sections: SectionData[] = [
   {
     id: "customs",
     order: 2,
-    title: "CWT Customs",
+    title: " Customs",
     blurb: "Digital solutions built with and for Sri Lanka Customs.",
     badge: SL_CUSTOMS_LOGO,
     cover: img("customs-01-arms.webp", "ARMS", "Automated Risk Management System", 1312, 1199, { route: "/customs/arms" }),
@@ -63,21 +63,21 @@ export const sections: SectionData[] = [
   {
     id: "customers",
     order: 3,
-    title: "CWT Customers",
+    title: " Our Customers",
     blurb: "Trusted by leading organisations, with the success stories to prove it.",
     cover: img("customers.webp", "Customers & Success Stories", "Trusted by leading organisations"),
   },
   {
     id: "products",
     order: 4,
-    title: "CWT Products",
+    title: "Our Products",
     blurb: "Industry-focused solutions that unlock value from data.",
     cover: img("products.webp", "Product Portfolio", "Industry-focused solutions that unlock value from data"),
   },
   {
     id: "training",
     order: 5,
-    title: "CWT Training",
+    title: "Our Training",
     blurb: "Professional training in Power BI and Agentic AI.",
     cover: img("training-powerbi-basic.webp", "Power BI Basic", "Foundation skills for data visualisation"),
     extras: [
