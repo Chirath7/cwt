@@ -38,13 +38,27 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="mt-10"
+          className="mt-10 flex flex-wrap items-center justify-center gap-3"
         >
+          <Link
+            to="/customs"
+            className="inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            Customs Solutions
+            <span aria-hidden="true">→</span>
+          </Link>
           <Link
             to="/about"
             className="inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
           >
             Explore CWT
+            <span aria-hidden="true">→</span>
+          </Link>
+          <Link
+            to="/products"
+            className="inline-flex items-center gap-2 rounded-full bg-navy px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          >
+            Customers
             <span aria-hidden="true">→</span>
           </Link>
         </motion.div>
